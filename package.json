@@ -1,0 +1,86 @@
+{
+    "name": "derivco-test-task",
+    "version": "0.0.1",
+    "description": "Derivco test task",
+    "main": "src/index.js",
+    "private": true,
+    "scripts": {
+      "test": "nyc --reporter=html --reporter=text ava",
+      "build": "npm run test && webpack --mode=production --devtool=none",
+      "start:dev": "webpack serve --config webpack.config.js",
+      "docs" : "jsdoc src README.md -r -d docs"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+ssh://git@github.com:JanAmbrozic/derivco-test-task.git"
+    },
+    "author": "Jan Ambrozic",
+    "license": "ISC",
+    "homepage": "https://github.com/JanAmbrozic/derivco-test-task#readme",
+    "dependencies": {
+      "@ava/babel-preset-stage-4": "^2.0.0",
+      "@pixi/filter-motion-blur": "^2.6.1",
+      "@tweenjs/tween.js": "^17.2.0",
+      "howler": "^2.1.0",
+      "pixi.js": "^4.8.3"
+    },
+    "devDependencies": {
+      "@babel/register": "^7.0.0",
+      "ava": "1.0.0-rc.2",
+      "babel-eslint": "^10.0.1",
+      "browser-env": "^3.3.0",
+      "copy-webpack-plugin": "^4.6.0",
+      "eslint": "^5.3.0",
+      "eslint-config-airbnb-base": "^13.1.0",
+      "eslint-config-crockford": "^2.0.0",
+      "eslint-plugin-import": "^2.14.0",
+      "html-webpack-plugin": "^3.2.0",
+      "http-server": "^0.11.1",
+      "jsdoc": "^3.5.5",
+      "nyc": "^13.1.0",
+      "webpack": "^4.44.2",
+      "webpack-cli": "^4.6.0",
+      "webpack-dev-server": "^3.11.2"
+    },
+    "ava": {
+      "babel": {
+        "testOptions": {
+          "presets": [
+            "@ava/babel-preset-stage-4"
+          ]
+        }
+      },
+      "compileEnhancements": false,
+      "require": [
+        "@babel/register",
+        "./test/helpers/setup-browser-env.js"
+      ],
+      "cache": true,
+      "concurrency": 5,
+      "failFast": true,
+      "failWithoutAssertions": false,
+      "verbose": true,
+      "files": [
+        "test/**/**/*.js"
+      ]
+    },
+    "nyc": {
+      "extension": [
+        "js"
+      ],
+      "include": [
+        "test/**/**/*.js"
+      ],
+      "exclude": [],
+      "ignore-class-method": "methodToIgnore",
+      "reporter": [
+        "lcov",
+        "text-summary"
+      ],
+      "cache": true,
+      "all": true,
+      "temp-directory": "./test-results-tmp",
+      "report-dir": "./test-results"
+    }
+  }
+  
