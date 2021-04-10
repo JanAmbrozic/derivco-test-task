@@ -2,6 +2,8 @@ import TWEEN from '@tweenjs/tween.js';
 import { MotionBlurFilter } from '@pixi/filter-motion-blur';
 import Component from '../../sceneManager/component';
 import Reel from './reel';
+import ResultsEval from './resultsEval';
+
 import AssetLoader from '../../assetLoader';
 
 /**
@@ -20,6 +22,7 @@ export default class Slotmachine extends Component {
     entity.container.addChild(this.container);
     this.state = 'idle';
     this.winninLineTweens = new TWEEN.Tween();
+    this.resultsEval = new ResultsEval();
   }
 
   /**
@@ -86,7 +89,6 @@ export default class Slotmachine extends Component {
     //await this.zoomIn();
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
-    //this.checkForWinningLines();
 
     new TWEEN.Tween(this.container)
     .delay(200)
@@ -107,7 +109,7 @@ export default class Slotmachine extends Component {
       let possibleStoppingPositions = ["top", "center", "bottom"];
       let posIndex = Math.floor(Math.random() * 3);
       let chosenPosition = possibleStoppingPositions[posIndex];
-      let results = ["7", "1xBAR", "CHERRY"];
+      let results = ["7", "BAR", "CHERRY"];
 
       this.reels[i].stop(0, chosenPosition, results);
       winningPositions[i] = {
@@ -119,6 +121,7 @@ export default class Slotmachine extends Component {
   
     console.log(winningPositions)
 
+    this.checkForWinningLines(this.reels, this.entity.attributes.winlines);
   }
 
   /**
@@ -126,30 +129,11 @@ export default class Slotmachine extends Component {
    * Of course in a reel game this would come from the backend and it would have more data.
    * TODO: move it to a separate winline component.
    */
-  checkForWinningLines() {
-    const results = [];
-    for (const reel of this.reels) {
-      results.push(reel.getWinningSymbolsIds());
-    }
+  checkForWinningLines(reels, winlineData) {
+    this.resultsEval.checkWinningLines(reels, winlineData)
 
-    const initialIndexes = results[0];
-    const wonWinningLines = {};
-    let totalWin = 0;
-
-    for (const winline of this.entity.attributes.winlines) {
-      // first symbol check
-      for (let i = 1; i < results.length; i++) {
-        if (results[i][winline.positions[i]] !== initialIndexes[winline.positions[0]]) {
-          break;
-        } else if (i >= 2) {
-          wonWinningLines[winline.winningLineNumber] = winline.positions.slice(0, i + 1);
-          totalWin += winline.winAmount;
-        }
-      }
-    }
-
-    this.animateWinlines(wonWinningLines);
-    this.entity.eventEmitter.emit('win', totalWin);
+    //this.animateWinlines(wonWinningLines);
+    this.entity.eventEmitter.emit('win', 0);
   }
 
   /**

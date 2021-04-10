@@ -89,6 +89,8 @@ export default class Reel {
    * @param {number} stopOnIndex - Index of the symbol where the reel stops.
    */
   async spin(stopOnIndex) {
+
+    this.winningSymbols = [];
     // start X position of the reel
     const startY = this.container.y;
     // calc: full circle / all symbols * stopIndex
@@ -105,20 +107,29 @@ export default class Reel {
         resolve();
       })
      .start()
-
-      // this.spinningTween = new TWEEN.Tween(this.container)
-      //   .to({ y: startY + endY }, this.reelParams.spin.duration)
-      //   .easing(this.reelParams.spin.easing)
-      //   .onComplete(() => {
-      //     this.reelStopped(stopOnIndex);
-      //     resolve();
-      //   })
-      //   .start();
     });
   }
 
   stop(reelSetStopIndex, stoppingPosition, results) {
     this.setStopping(reelSetStopIndex, stoppingPosition, results);
+  }
+
+  setWinningSymbols(stoppingPosition, results) {
+    switch (stoppingPosition) {
+      // if symbols is in center we only have one visible symbol
+      case "center":
+        this.winningSymbols.push(results[1]);
+        break;
+      // if symbols is on top we have top and center visible
+      case "top":
+        this.winningSymbols.push(results[1], results[2]);
+        break;
+      // if symbols is on bottom we have center and bottom visible
+      case "bottom":
+        this.winningSymbols.push(results[0], results[1]);
+        break;
+    }
+    console.log("winning Symbols", this.winningSymbols);
   }
 
   setStopping(pos, stoppingPosition, results) {
@@ -134,13 +145,9 @@ export default class Reel {
     this.stopOffset = this.stoppingPos[stoppingPosition];
 
     this.resultsContainer.y = this.topSymbol.y - this.reelHeight;
-    this.container.addChild(this.resultsContainer)
+    this.container.addChild(this.resultsContainer);
 
-    // for (let index = 0; index < this.results.length; index++) {
-    //   const result = array[index];
-      
-    // }
-
+    this.setWinningSymbols(stoppingPosition, results);
 
     for (let index = 0; index < results.length; index++) {
       const result = results[index];
@@ -149,7 +156,6 @@ export default class Reel {
       sym.symbolId = result;
       this.resultsContainer.addChild(sym);
     }
-
 
     //center -75, -150
     this.spinningTween = new TWEEN.Tween(this.resultsContainer)
@@ -220,9 +226,9 @@ export default class Reel {
 
   updateTopSymbol(symbol) {
     this.incrementReelSetPos();
-    if(this.reelIndex === 0){
-      console.log("setting tetxure", this.reelSet[this.reelSetPosition])
-    }
+    // if(this.reelIndex === 0){
+    //   console.log("setting tetxure", this.reelSet[this.reelSetPosition])
+    // }
     symbol.texture = PIXI.utils.TextureCache[this.reelSet[this.reelSetPosition]];
   }
 
@@ -239,29 +245,14 @@ export default class Reel {
    * @param {number} onIndex - Index of the symbol where the reel stops.
    */
   reelStopped(onIndex) {
-    let symbolAboveId = onIndex - 1;
-    let symbolBelowId = onIndex + 1;
-
-    if (symbolAboveId < 0) {
-      symbolAboveId = this.symbols.length - 1;
-    }
-
-    if (symbolBelowId > this.symbols.length - 1) {
-      symbolBelowId = 0;
-    }
-
-    this.winningSymbols = [
-      this.symbols[symbolAboveId],
-      this.symbols[onIndex],
-      this.symbols[symbolBelowId],
-    ];
+    console.log("Reel Stopped")
   }
 
   /**
    * @public
    * @member {array} winningSymbols - Array of winning symbol objects.
    */
-  getWinningSymbols() {
+   getVisibleSymbols() {
     return this.winningSymbols;
   }
 
