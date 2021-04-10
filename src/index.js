@@ -38,6 +38,7 @@ export default class Game {
     };
     this.sceneManager.init(this.app, components);
     this.sceneManager.start();
+    this.app.ticker.add(() => this.sceneManager.update());
     //const soundId = AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].play();
     //AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].volume(0.7, soundId);
   }

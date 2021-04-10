@@ -86,6 +86,16 @@ export default class SceneManager {
   }
 
   /**
+   * Game loop which calls update function on every started component
+   */
+  update() {
+    this.startedComponents.forEach((component) => {
+      component.update();
+    });
+  }
+
+
+  /**
    * Called by {@link find} method. Ideally this would be a private method.
    * @param {PIXI.Container} container - Entity container twhich is used to recursively loop on and find the entity.
    * @param {string} id - Entity id which is used to find the entity.

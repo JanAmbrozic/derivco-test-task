@@ -24,4 +24,11 @@ export default class Component {
   entitiesReady() {
     // will be implemented in invdividual components
   }
+
+  /**
+   * A stub method for update.
+   */
+  update (){
+    // will be implemented in invdividual components
+  }
 }
