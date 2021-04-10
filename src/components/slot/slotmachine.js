@@ -87,13 +87,38 @@ export default class Slotmachine extends Component {
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
     //this.checkForWinningLines();
+
+    new TWEEN.Tween(this.container)
+    .delay(200)
+    .onComplete(() => {
+      this.stop();
+    })
+    .start()
   }
 
   async stop() {
+
+    let winningPositions = {
+    
+    }
+
     for (let i = 0; i < this.reels.length ; i++) {
       // pass in reelSet stop position
-      await this.reels[i].stop(0);
+      let possibleStoppingPositions = ["top", "center", "bottom"];
+      let posIndex = Math.floor(Math.random() * 3);
+      let chosenPosition = possibleStoppingPositions[posIndex];
+      let results = ["7", "1xBAR", "CHERRY"];
+
+      this.reels[i].stop(0, chosenPosition, results);
+      winningPositions[i] = {
+        winningLine: chosenPosition,
+        symbol: results[1]
+      }
     }
+    this.state = 'idle';
+  
+    console.log(winningPositions)
+
   }
 
   /**

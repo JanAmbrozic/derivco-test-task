@@ -13,11 +13,11 @@ export default
       id: 'reel-background',
       display: {
         position: {
-          x: 260,
-          y: 20,
+          x: 625,
+          y: 155,
         },
         scale: {
-          x: 1,
+          x: 0.8,
           y: 1,
         },
         alpha: 1,

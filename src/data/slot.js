@@ -26,12 +26,18 @@ export default
     },
     numberOfReels: 3,
     numberOfSymbolsPerReel: [
-      3, 3, 3
+      5, 5, 5
     ],
+    reelSet: [
+      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"],
+      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"],
+      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"]
+    ],
+
     spin: {
       duration: 3000,
       speedFactor: 6,
-      easing: TWEEN.Easing.Quadratic.InOut,
+      easing: TWEEN.Easing.Back.InOut,
     },
     winlines: [
       // 3 CHERRY symbols on top line 2000

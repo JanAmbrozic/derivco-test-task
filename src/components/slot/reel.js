@@ -21,25 +21,35 @@ export default class Reel {
     this.reelParams = reelParams;
     this.reelHeight = 400;
     this.state = REEL_STATES.IDLE;
+    this.originalReelSet = [...reelParams.reelSet];
     this.reelSet = reelParams.reelSet;
     this.reelIndex = reelIndex;
     this.topSymbol;
     this.reelSetPosition = 0;
-    this.results = ["3xBAR", "3xBAR", "3xBAR"];
+
+    this.resultsContainer = new PIXI.Container();
+
+    this.container.x = this.reelParams.x;
 
     this.stoppingPos = {
-      top: 0,
-      center: 150,
-      bottom: 300
+      top: -150,
+      center: -75,
+      bottom: 0
     }
+
+    const graphics1 = new PIXI.Graphics();
+    graphics1.beginFill(0x22CCFF);
+    graphics1.drawRect(0, 0, 150, this.reelHeight);
+    graphics1.endFill();
 
     //for debuggin purposes
     const graphics = new PIXI.Graphics();
     graphics.beginFill(0xFF3300);
-    graphics.drawRect(this.reelParams.x, 0, 150, this.reelHeight);
+    graphics.drawRect(0, 0, 150, this.reelHeight);
     graphics.endFill();
    
     this.container.addChild(graphics);
+    this.resultsContainer.addChild(graphics1);
     //this.container.mask = graphics;
   }
 
@@ -48,7 +58,7 @@ export default class Reel {
    */
   start() {
     for (let index = 0; index < this.numOfSymbols; index++) {
-      this.createSymbols({x: this.reelParams.x, y: index * 150}, index, this.numOfSymbols);
+      this.createSymbols({x: 0, y: index * 155}, index, this.numOfSymbols);
     }
 
     this.topSymbol = this.symbols[0];
@@ -90,7 +100,7 @@ export default class Reel {
      new TWEEN.Tween(this.container)
       .delay(3000)
       .onComplete(() => {
-        this.setStopping();
+        //this.setStopping();
         //this.reelStopped(stopOnIndex);
         resolve();
       })
@@ -107,43 +117,59 @@ export default class Reel {
     });
   }
 
-  stop() {
-
+  stop(reelSetStopIndex, stoppingPosition, results) {
+    this.setStopping(reelSetStopIndex, stoppingPosition, results);
   }
 
-  setStopping(pos) {
+  setStopping(pos, stoppingPosition, results) {
     this.state = REEL_STATES.STOPPING;
     //set winning symbols + padding
     // for (const result of this.results) {
     //   sym.y = this.topSymbol.y - sym.height;
     //   this.topSymbol = sym;
     // }
+    this.reelSet.push(...results)
+    this.reelSetPosition = this.reelSet.length - 4;
+    this.symCounter = 5;  
+    this.stopOffset = this.stoppingPos[stoppingPosition];
 
-    this.reelSetPosition = 0;
-    this.symCounter = 3;
-    
-    let possibleStoppingPositions = ["top", "center", "bottom"];
-
-    this.stopOffset = this.stoppingPos[possibleStoppingPositions[Math.floor(Math.random() * 3)]];
+    this.resultsContainer.y = this.topSymbol.y - this.reelHeight;
+    this.container.addChild(this.resultsContainer)
 
     // for (let index = 0; index < this.results.length; index++) {
     //   const result = array[index];
       
     // }
 
-    // for (const symbol of this.symbols) {
-    //     symbol.y = this.topSymbol.y - symbol.height;
-    //     this.topSymbol = symbol;
-    //     this.updateTopSymbol(symbol);
-    // }
 
-    // this.spinningTween = new TWEEN.Tween(this.container)
-    //   .to({ y: 150 }, this.reelParams.spin.duration)
-    //   .easing(this.reelParams.spin.easing)
-    //   .onComplete(() => {
-    //     this.state = REEL_STATES.IDLE;
-    //   })
-    //   .start();
+    for (let index = 0; index < results.length; index++) {
+      const result = results[index];
+      const sym = new PIXI.Sprite( PIXI.utils.TextureCache[result]);
+      sym.y = index * 150
+      sym.symbolId = result;
+      this.resultsContainer.addChild(sym);
+    }
+
+
+    //center -75, -150
+    this.spinningTween = new TWEEN.Tween(this.resultsContainer)
+      .to({ y: this.stopOffset }, 500)
+      .easing(this.reelParams.spin.easing)
+      .onComplete(() => {
+        this.state = REEL_STATES.IDLE;
+        this.topSymbol = this.resultsContainer;
+      })
+      .start();
+  }
+
+  finishStopping() {
+      this.reset();
+  }
+
+  reset() {
+    this.reelSet = [...this.originalReelSet];
+    this.resultsContainer.removeChildren();
+    this.container.removeChild(this.resultsContainer);
   }
 
   update() { 
@@ -161,25 +187,29 @@ export default class Reel {
             this.updateTopSymbol(symbol);
           } else {
             symbol.y += 10;
-
           }
         }
+        if(this.resultsContainer.y < this.reelHeight) {
+          this.resultsContainer.y += 10;
+        }
+
         break;
 
       case REEL_STATES.STOPPING:
         for (const symbol of this.symbols) {
-          if((symbol.y) >= this.reelHeight + this.stopOffset) {
-            symbol.y = this.topSymbol.y - symbol.height;
-            this.topSymbol = symbol;
-            this.updateTopSymbol(symbol);
-            this.symCounter--;
+          // if((symbol.y) >= this.reelHeight) {
+          //   symbol.y = this.topSymbol.y - symbol.height;
+          //   this.topSymbol = symbol;
+          //   //this.updateTopSymbol(symbol);
+          //   this.symCounter--;
 
-            if(this.symCounter === 0) {
-              this.state = REEL_STATES.IDLE;
-            }
-          } else {
+            // if(this.symCounter === 0) {
+            //   //this.state = REEL_STATES.IDLE;
+            //   this.finishStopping();
+            // }
+          //} else {
             symbol.y += 10;
-          }
+          //}
         }
         break;
     
@@ -190,6 +220,9 @@ export default class Reel {
 
   updateTopSymbol(symbol) {
     this.incrementReelSetPos();
+    if(this.reelIndex === 0){
+      console.log("setting tetxure", this.reelSet[this.reelSetPosition])
+    }
     symbol.texture = PIXI.utils.TextureCache[this.reelSet[this.reelSetPosition]];
   }
 
