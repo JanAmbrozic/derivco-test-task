@@ -28,7 +28,7 @@ export default class Slotmachine extends Component {
    */
   createReels() {
     for (let index = 0; index < this.entity.attributes.numberOfReels; index++) {
-      const reelParams = { x:  150 * index, spin: this.entity.attributes.spin, reelSet: this.entity.attributes.reelSet[index] };
+      const reelParams = { x:  180 * index, spin: this.entity.attributes.spin, reelSet: this.entity.attributes.reelSet[index] };
       const reel = new Reel(index, this.entity.attributes.numberOfSymbolsPerReel[index], reelParams);
       reel.start();
       this.reels.push(reel);
@@ -87,6 +87,13 @@ export default class Slotmachine extends Component {
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
     //this.checkForWinningLines();
+  }
+
+  async stop() {
+    for (let i = 0; i < this.reels.length ; i++) {
+      // pass in reelSet stop position
+      await this.reels[i].stop(0);
+    }
   }
 
   /**

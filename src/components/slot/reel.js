@@ -27,6 +27,12 @@ export default class Reel {
     this.reelSetPosition = 0;
     this.results = ["3xBAR", "3xBAR", "3xBAR"];
 
+    this.stoppingPos = {
+      top: 0,
+      center: 150,
+      bottom: 300
+    }
+
     //for debuggin purposes
     const graphics = new PIXI.Graphics();
     graphics.beginFill(0xFF3300);
@@ -34,7 +40,7 @@ export default class Reel {
     graphics.endFill();
    
     this.container.addChild(graphics);
-    this.container.mask = graphics;
+    //this.container.mask = graphics;
   }
 
   /**
@@ -55,7 +61,8 @@ export default class Reel {
    * @param {number} numOfElem - Number of total elements so we can calculate the right angle.
    */
   createSymbols(position, index, numOfElem) {
-    const sym = new PIXI.Sprite(PIXI.utils.TextureCache[this.reelSet[this.reelSetPosition]] || PIXI.Texture.EMPTY);
+    let textureId = this.reelSet[this.reelSetPosition];
+    const sym = new PIXI.Sprite( PIXI.utils.TextureCache[textureId]);
     sym.scale.x = 1;
     sym.scale.y = 1;
     sym.x = position.x;
@@ -114,6 +121,10 @@ export default class Reel {
 
     this.reelSetPosition = 0;
     this.symCounter = 3;
+    
+    let possibleStoppingPositions = ["top", "center", "bottom"];
+
+    this.stopOffset = this.stoppingPos[possibleStoppingPositions[Math.floor(Math.random() * 3)]];
 
     // for (let index = 0; index < this.results.length; index++) {
     //   const result = array[index];
@@ -157,13 +168,13 @@ export default class Reel {
 
       case REEL_STATES.STOPPING:
         for (const symbol of this.symbols) {
-          if((symbol.y) >= this.reelHeight) {
+          if((symbol.y) >= this.reelHeight + this.stopOffset) {
             symbol.y = this.topSymbol.y - symbol.height;
             this.topSymbol = symbol;
             this.updateTopSymbol(symbol);
             this.symCounter--;
 
-            if(this.symCounter===0) {
+            if(this.symCounter === 0) {
               this.state = REEL_STATES.IDLE;
             }
           } else {
