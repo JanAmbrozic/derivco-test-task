@@ -3,6 +3,7 @@ import { MotionBlurFilter } from '@pixi/filter-motion-blur';
 import Component from '../../sceneManager/component';
 import Reel from './reel';
 import ResultsEval from './resultsEval';
+import RNG from '../mockServer/rng';
 
 import AssetLoader from '../../assetLoader';
 
@@ -23,6 +24,8 @@ export default class Slotmachine extends Component {
     this.state = 'idle';
     this.winninLineTweens = new TWEEN.Tween();
     this.resultsEval = new ResultsEval();
+    this.rng = new RNG();
+
   }
 
   /**
@@ -106,14 +109,11 @@ export default class Slotmachine extends Component {
 
     for (let i = 0; i < this.reels.length ; i++) {
       // pass in reelSet stop position
-      let possibleStoppingPositions = ["top", "center", "bottom"];
-      let posIndex = Math.floor(Math.random() * 3);
-      let chosenPosition = possibleStoppingPositions[posIndex];
-      let results = ["7", "BAR", "CHERRY"];
+      let results = this.rng.getResults();
 
-      this.reels[i].stop(0, chosenPosition, results);
+      this.reels[i].stop(0, results.winlineType, results.symbols);
       winningPositions[i] = {
-        winningLine: chosenPosition,
+        winningLine: results.winlineType,
         symbol: results[1]
       }
     }
@@ -130,10 +130,8 @@ export default class Slotmachine extends Component {
    * TODO: move it to a separate winline component.
    */
   checkForWinningLines(reels, winlineData) {
-    this.resultsEval.checkWinningLines(reels, winlineData)
-
-    //this.animateWinlines(wonWinningLines);
-    this.entity.eventEmitter.emit('win', 0);
+    let winlines = this.resultsEval.checkWinningLines(reels, winlineData)
+    this.entity.eventEmitter.emit('win', winlines);
   }
 
   /**
