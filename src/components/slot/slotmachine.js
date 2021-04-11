@@ -18,7 +18,7 @@ export default class Slotmachine extends Component {
     this.entity = entity;
     this.reels = [];
     this.createReels();
-    entity.eventEmitter.on('spin', () => { this.rotate(); });
+    entity.eventEmitter.on('spinAllowed', () => { this.rotate(); });
     entity.container.addChild(this.container);
     this.state = 'idle';
     this.winninLineTweens = new TWEEN.Tween();
@@ -60,6 +60,8 @@ export default class Slotmachine extends Component {
   async startSpin() {
     //const spinSound = AssetLoader.sounds[AssetLoader.audioAssets.swoosh].play();
     //AssetLoader.sounds[AssetLoader.audioAssets.swoosh].loop(spinSound, spinSound);
+
+
 
     this.state = 'spinning';
     // reset the total win

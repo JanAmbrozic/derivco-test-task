@@ -30,8 +30,11 @@ export default class Debug {
                     }
                 };
                 eventEmitter.emit('setResults', debugResults);
-            }
+                eventEmitter.emit('setBalance', submit.balance);
+            },
+            balance: 5000
         };
+        gui.add(submit, "balance");
         gui.add(submit, 'RIG');
     }
 

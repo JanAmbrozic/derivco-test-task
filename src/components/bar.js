@@ -11,7 +11,7 @@ export default class Bar extends Component {
     super();
     this.totalBet = 1;
     this.totalWin = 0;
-    this.userDefinedCurrency = {} //{ style: 'currency', currency: 'EUR' };
+    this.userDefinedCurrency = {}; //{ style: 'currency', currency: 'EUR' };
   }
 
   /**
@@ -21,6 +21,8 @@ export default class Bar extends Component {
     this.entity = entity;
     entity.eventEmitter.on('spinStarted', () => { this.updateBalance(); });
     entity.eventEmitter.on('win', (win) => { this.updateTotalWin(win.totalWin); });
+    entity.eventEmitter.on('setBalance', (balance) => { this.setBalance(balance); });
+    entity.eventEmitter.on('spin', () => { this.checkBalance(); });
 
     this.getBalance();
   }
@@ -55,6 +57,27 @@ export default class Bar extends Component {
     this.balanceValueEntity.text = this.balance.toLocaleString(navigator.language, this.userDefinedCurrency);
     this.winValueEntity.text = this.totalWin.toLocaleString(navigator.language, this.userDefinedCurrency);
     this.totalBetValueEntity.text = this.totalBet.toLocaleString(navigator.language, this.userDefinedCurrency);
+  }
+
+  /**
+   * Sets balance. For now only used for debugging purposes.
+   */
+  setBalance(balance) {
+    localStorage.setItem('balance', this.balance);
+    this.balance = balance;
+    this.updateTotalWin(0);
+  }
+
+  /**
+   * Checks balance. If it's above 0 it propagates the spin further otherwise
+   * it notifies the user.
+   */
+  checkBalance() {
+    if (this.balance - this.totalBet >= 0 ){
+      this.entity.eventEmitter.emit('spinAllowed');
+    } else {
+      alert("You do not have enough money to spin");
+    }
   }
 
   /**
