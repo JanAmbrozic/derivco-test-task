@@ -1,5 +1,6 @@
 import * as bar from './bar';
 import * as slot from './slot';
+import * as paytable from './paytable';
 
 export default
 {
@@ -9,11 +10,12 @@ export default
     maxHeight: 720,
   },
   entities: [
+    paytable.default,
     {
       id: 'reel-background',
       display: {
         position: {
-          x: 625,
+          x: 425,
           y: 155,
         },
         scale: {

@@ -8,6 +8,7 @@ import Text from './components/text';
 import Bar from './components/bar';
 import Slotmachine from './components/slot/slotmachine';
 import Reel from './components/slot/reel';
+import Paytable from './components/paytable';
 
 export default class Game {
   constructor() {
@@ -34,7 +35,8 @@ export default class Game {
       Text,
       Bar,
       Slotmachine,
-      Reel
+      Reel,
+      Paytable
     };
     this.sceneManager.init(this.app, components);
     this.sceneManager.start();

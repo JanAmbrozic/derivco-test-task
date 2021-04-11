@@ -5,7 +5,7 @@ export default
   id: 'slot',
   display: {
     position: {
-      x: 640,
+      x: 440,
       y: 155,
     },
     scale: {
@@ -42,123 +42,123 @@ export default
     winlines: [
       // 3 CHERRY symbols on top line 2000
       {
-        winningLineNumber: 0,
+        winlineId: 0,
         type: "top",
         sym: ["CHERRY"],
         winAmount: 2000,
       }, 
       // 3 CHERRY symbols on center line 1000
       {
-        winningLineNumber: 0,
+        winlineId: 1,
         type: "center",
         sym: ["CHERRY"],
         winAmount: 1000,
       }, 
       // 3 CHERRY symbols on bottom line 4000
       {
-        winningLineNumber: 0,
+        winlineId: 2,
         type: "bottom",
         sym: ["CHERRY"],
         winAmount: 4000,
       }, 
       // 3 7 symbols on any line 150
       {
-        winningLineNumber: 0,
+        winlineId: 3,
         type: "top",
         sym: ["7"],
         winAmount: 150,
       }, {
-        winningLineNumber: 0,
+        winlineId: 4,
         type: "center",
         sym: ["7"],
         winAmount: 150,
       }, {
-        winningLineNumber: 0,
+        winlineId: 5,
         type: "bottom",
         sym: ["7"],
         winAmount: 150,
       }, 
       // Any combination of CHERRY and 7 on any line 75
       {
-        winningLineNumber: 0,
+        winlineId: 0,
         type: "top",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, {
-        winningLineNumber: 0,
+        winlineId: 0,
         type: "center",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, {
-        winningLineNumber: 0,
+        winlineId: 0,
         type: "bottom",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, 
       // Combination of any BAR symbols on any line 5
       {
-        winningLineNumber: 0,
+        winlineId: 0,
         type: "top",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
       }, {
-        winningLineNumber: 1,
+        winlineId: 1,
         type: "center",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
       }, {
-        winningLineNumber: 2,
+        winlineId: 2,
         type: "bottom",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
       }, 
       // 3 3xBAR symbols on any line 50
       {
-        winningLineNumber: 0,
+        winlineId: 6,
         type: "top",
         sym: ["3xBAR"],
         winAmount: 50,
       }, {
-        winningLineNumber: 0,
+        winlineId: 7,
         type: "center",
         sym: ["3xBAR"],
         winAmount: 50,
       }, {
-        winningLineNumber: 0,
+        winlineId: 8,
         type: "bottom",
         sym: ["3xBAR"],
         winAmount: 50,
       }, 
       // 3 2xBAR symbols on any line 20
       {
-        winningLineNumber: 0,
+        winlineId: 9,
         type: "top",
         sym: ["2xBAR"],
         winAmount: 20,
       }, {
-        winningLineNumber: 0,
+        winlineId: 10,
         type: "center",
         sym: ["2xBAR"],
         winAmount: 20,
       }, {
-        winningLineNumber: 0,
+        winlineId: 11,
         type: "bottom",
         sym: ["2xBAR"],
         winAmount: 20,
       }, 
       // 3 BAR symbols on any line 10
       {
-        winningLineNumber: 0,
+        winlineId: 12,
         type: "top",
         sym: ["BAR"],
         winAmount: 10,
       }, {
-        winningLineNumber: 0,
+        winlineId: 13,
         type: "center",
         sym: ["BAR"],
         winAmount: 10,
       }, {
-        winningLineNumber: 0,
+        winlineId: 14,
         type: "bottom",
         sym: ["BAR"],
         winAmount: 10,
