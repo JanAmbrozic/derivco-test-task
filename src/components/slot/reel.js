@@ -25,6 +25,7 @@ export default class Reel {
     this.reelIndex = reelIndex;
     this.topSymbol;
     this.reelSetPosition = Math.floor(Math.random() * this.reelSet.length - 1);
+    this.incrementReelSetPos();
 
     this.resultsContainer = new PIXI.Container();
 
@@ -105,12 +106,21 @@ export default class Reel {
         //this.reelStopped(stopOnIndex);
         resolve();
       })
-     .start()
+     .start();
     });
   }
 
   stop(reelSetStopIndex, stoppingPosition, results) {
     this.setStopping(reelSetStopIndex, stoppingPosition, results);
+    return new Promise((resolve) => {  
+      this.spinningTween = new TWEEN.Tween({})
+      .to({}, 0)
+      .delay(500)
+      .onComplete(() => {
+        resolve();
+      })
+      .start();
+    });
   }
 
   setWinningSymbols(stoppingPosition, results) {

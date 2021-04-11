@@ -5,7 +5,6 @@ import Reel from './reel';
 import ResultsEval from './resultsEval';
 import RNG from '../mockServer/rng';
 
-import AssetLoader from '../../assetLoader';
 
 /**
  * Slotmachine component. It handles everything from reel creation to spinning and stopping.
@@ -69,7 +68,7 @@ export default class Slotmachine extends Component {
     const velocity = { x: 0, y: 0 };
     const filter = new MotionBlurFilter([0, 0], 9);
 
-    this.container.filters = [filter];
+    //this.container.filters = [filter];
 
     new TWEEN.Tween(velocity)
       .to({ x: 1, y: 50 }, 1500)
@@ -99,8 +98,6 @@ export default class Slotmachine extends Component {
     //await this.zoomIn();
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
-
-
   }
 
   async stop() {
@@ -109,26 +106,36 @@ export default class Slotmachine extends Component {
     
     };
 
+    let promises = [];
+
+
     for (let i = 0; i < this.reels.length ; i++) {
       // pass in reelSet stop position
       let results = this.rng.getResults(i);
 
-      new TWEEN.Tween({})
-      .to({}, 0)
-      .delay(500 * i)
-      .easing(TWEEN.Easing.Linear.None)
-      .onComplete(async () => {
-        await this.reels[i].stop(0, results.winlineType, results.symbols);
-        winningPositions[i] = {
-          winningLine: results.winlineType,
-          symbol: results[1]
-        };
-      })
-      .start();
+      promises.push(new Promise((resolve) => {
+        new TWEEN.Tween({})
+        .to({}, 0)
+        .delay(500 * i)
+        .easing(TWEEN.Easing.Linear.None)
+        .onComplete(async () => {
+          await this.reels[i].stop(0, results.winlineType, results.symbols);
+          winningPositions[i] = {
+            winningLine: results.winlineType,
+            symbol: results[1]
+          };
+          resolve();
+        })
+        .start();
+      }));
+
     }
     this.state = 'idle';
+
+    Promise.all(promises).then(() => {
+      this.checkForWinningLines(this.reels, this.entity.attributes.winlines);
+    });
   
-    this.checkForWinningLines(this.reels, this.entity.attributes.winlines);
   }
 
   /**
@@ -139,46 +146,43 @@ export default class Slotmachine extends Component {
   checkForWinningLines(reels, winlineData) {
     let winlines = this.resultsEval.checkWinningLines(reels, winlineData)
     this.entity.eventEmitter.emit('win', winlines);
+    this.animateWinlines(winlines);
   }
 
   /**
    * Very basic winline animation which just scales up and down the winning symbols.
    * TODO: move it to a separate winline component.
    */
-  animateWinlines(winlines) {
-    this.winninLineTweens = new TWEEN.Tween();
+  animateWinlines(winlinesData) {
 
-    for (const key in winlines) {
-      if (Object.prototype.hasOwnProperty.call(winlines, key)) {
-        const winline = winlines[key];
-        const scale = { x: 0.45, y: 0.45 };
-        // eslint-disable-next-line no-underscore-dangle
-        const chainedTween = this.winninLineTweens._chainedTweens[this.winninLineTweens._chainedTweens.length - 1];
-        (chainedTween || this.winninLineTweens).chain(new TWEEN.Tween(scale)
-          .to({ x: 0.55, y: 0.55 }, 500)
-          .easing(TWEEN.Easing.Linear.None)
-          .repeat(3)
-          .onStart(() => {
-            //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
-          })
-          .onUpdate((o) => {
-            for (let i = 0; i < winline.length; i++) {
-              const element = this.reels[i].getWinningSymbols()[winline[i]];
-              element.scale.x = o.x;
-              element.scale.y = o.y;
-            }
-          })
-          .onStop(() => {
-            for (let i = 0; i < winline.length; i++) {
-              const element = this.reels[i].getWinningSymbols()[winline[i]];
-              element.scale.x = 0.45;
-              element.scale.y = 0.45;
-            }
-          })
-          .yoyo(true));
-      }
+    for (const winline of winlinesData.winlines) {
+      const graphics1 = new PIXI.Graphics();
+      graphics1.beginFill(0xDC143C);
+      graphics1.drawRect(0, 0, 500, 7);
+      graphics1.endFill();
+      graphics1.scale.y = 1;
+      graphics1.y = this.entity.attributes.winPosition[winline.type];
+      graphics1.alpha = 0;
+
+      this.container.addChild(graphics1);
+
+      const opacity = { o: 1};
+      new TWEEN.Tween(opacity)
+        .to({ o: 0.1 }, 500)
+        .easing(TWEEN.Easing.Linear.None)
+        .repeat(3)
+        .onStart(() => {
+          //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
+        })
+        .onUpdate((opacity) => {
+            graphics1.alpha = opacity.o;
+        })
+        .onComplete(() => {
+          this.container.removeChild(graphics1);
+        })
+        .yoyo(true)
+        .start();
     }
-    this.winninLineTweens.start();
   }
 
   /**

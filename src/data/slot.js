@@ -5,12 +5,12 @@ export default
   id: 'slot',
   display: {
     position: {
-      x: 440,
-      y: 155,
+      x: 350,
+      y: 100,
     },
     scale: {
-      x: 0.85,
-      y: 0.85,
+      x: 1.2,
+      y: 1.2,
     },
   },
   entities: [
@@ -20,9 +20,10 @@ export default
     'Slotmachine',
   ],
   attributes: {
-    zoomIn: {
-      duration: 1500,
-      easing: TWEEN.Easing.Sinusoidal.In,
+    winPosition: {
+      top: 55,
+      center: 130,
+      bottom: 205
     },
     numberOfReels: 3,
     numberOfSymbolsPerReel: [
