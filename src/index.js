@@ -9,10 +9,12 @@ import Bar from './components/bar';
 import Slotmachine from './components/slot/slotmachine';
 import Reel from './components/slot/reel';
 import Paytable from './components/paytable';
+import Debug from './debug';
 
 export default class Game {
   constructor() {
     console.log('Hello Derivco!');
+
     this.app = new PIXI.Application({ width: 1280, height: 720, backgroundColor: 0x3399da });
 
     this.app.ticker.add(() => {
@@ -43,6 +45,16 @@ export default class Game {
     this.app.ticker.add(() => this.sceneManager.update());
     //const soundId = AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].play();
     //AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].volume(0.7, soundId);
+    this.checkForDebug(this.sceneManager);
+  }
+
+  checkForDebug(sceneManager) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const debug = urlParams.get('debug');
+
+    if(debug === "true") {
+      this.debug = new Debug(sceneManager.getEventEmitter());
+    }
   }
 }
 
