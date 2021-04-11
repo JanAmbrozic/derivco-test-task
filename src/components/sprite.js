@@ -15,4 +15,16 @@ export default class Sprite extends Component {
     this.container = PIXI.Sprite.fromFrame(entity.attributes.textureId);
     entity.container.addChild(this.container);
   }
+
+  /**
+   * Sets new texture for a sprite. 
+   * If texture is not found it defaults to Pixi's EMPTY texture.
+   * @param {string} textureId - Texture id
+   */
+  setTexture(textureId) {
+    if(!PIXI.utils.TextureCache[textureId]) {
+      textureId = PIXI.Texture.EMPTY;
+    }
+    this.container.texture = PIXI.Sprite.fromFrame(textureId);
+  }
 }

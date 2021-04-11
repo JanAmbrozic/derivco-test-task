@@ -113,4 +113,13 @@ export default class SceneManager {
     }
     return returnObject;
   }
+
+  /**
+   * Exposing event emitter for easier debugging purposes. With event emitter we can communicate with 
+   * components whilst still keeping them isolated.
+   * @returns {object} eventEmitter
+   */
+  getEventEmitter() {
+    return this.eventEmitter;
+  }
 }
