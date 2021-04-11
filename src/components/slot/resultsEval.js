@@ -41,6 +41,7 @@ Combination of any BAR symbols on any line 5
   checkWinningLines(reels, winlineData) {
 
     let winlines = [];
+    let totalWin = 0;
 
     //check if all numbers of visible symbols are equal, if not we do not have a win
     if(reels[0].getVisibleSymbols().length === reels[1].getVisibleSymbols().length 
@@ -58,6 +59,7 @@ Combination of any BAR symbols on any line 5
                     let newWinline = this.checkFor3SymbolsMatch(reels, winline, 0);
                     if(newWinline){
                         winlines.push(newWinline);
+                        totalWin += newWinline.winAmount;
                     }
                 }
 
@@ -82,13 +84,17 @@ Combination of any BAR symbols on any line 5
                 }
 
                 if(newWinline){
+                    totalWin += newWinline.winAmount;
                     winlines.push(newWinline);
                 }
             }            
         }
     } 
 
-    console.log(winlines);
+    return {
+      winlines,
+      totalWin
+      };
   }
 
   checkFor3SymbolsMatch(reels, winline, index) {
@@ -97,6 +103,7 @@ Combination of any BAR symbols on any line 5
         reels[0].getVisibleSymbols()[index] === reels[2].getVisibleSymbols()[index] && 
         winline.sym.length === 1 && winline.sym[0] === reels[0].getVisibleSymbols()[index]) {
         let foundWinline = {
+            id: winline.winlineId,
             sym: winline.sym,
             type: winline.type,
             winAmount: winline.winAmount
