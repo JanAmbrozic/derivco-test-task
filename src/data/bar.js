@@ -3,8 +3,8 @@ export default
   id: 'balance',
   display: {
     position: {
-      x: 50,
-      y: 650,
+      x: 550,
+      y: 550,
     },
     scale: {
       x: 0.5,
@@ -13,6 +13,26 @@ export default
     alpha: 1,
   },
   entities: [
+    {
+      id: 'balanceBackground',
+      display: {
+        position: {
+          x: 10,
+          y: -150,
+        },
+        scale: {
+          x: 1,
+          y: 1,
+        },
+        alpha: 1,
+      },
+      attributes: {
+        textureId: 'balanceBackground',
+      },
+      components: [
+        'Sprite',
+      ],
+    },
     {
       id: 'balanceBackground',
       display: {
@@ -38,7 +58,7 @@ export default
           attributes: {
             text: 'Balance: ',
             style: {
-              fontSize: 45,
+              fontSize: 40,
             },
           },
           components: [
@@ -56,7 +76,7 @@ export default
               attributes: {
                 text: '',
                 style: {
-                  fontSize: 45,
+                  fontSize: 40,
                 },
               },
               components: [
@@ -76,7 +96,7 @@ export default
           attributes: {
             text: 'Win:',
             style: {
-              fontSize: 45,
+              fontSize: 40,
             },
           },
           components: [
@@ -94,7 +114,7 @@ export default
               attributes: {
                 text: '',
                 style: {
-                  fontSize: 45,
+                  fontSize: 40,
                 },
               },
               components: [
@@ -114,7 +134,7 @@ export default
           attributes: {
             text: 'Total Bet:',
             style: {
-              fontSize: 45,
+              fontSize: 40,
             },
           },
           components: [
@@ -132,7 +152,7 @@ export default
               attributes: {
                 text: '',
                 style: {
-                  fontSize: 45,
+                  fontSize: 40,
                 },
               },
               components: [
