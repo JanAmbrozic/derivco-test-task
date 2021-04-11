@@ -3,7 +3,7 @@ export default
   id: 'balance',
   display: {
     position: {
-      x: 550,
+      x: 740,
       y: 550,
     },
     scale: {

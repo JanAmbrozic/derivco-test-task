@@ -18,8 +18,8 @@ export default
           y: 0,
         },
         scale: {
-          x: 0,
-          y: 0,
+          x: 1,
+          y: 1,
         },
         alpha: 1,
       },
@@ -36,12 +36,12 @@ export default
       id: 'reel-background',
       display: {
         position: {
-          x: 425,
-          y: 145,
+          x: 330,
+          y: 85,
         },
         scale: {
-          x: 0.8,
-          y: 1.05,
+          x: 1.13,
+          y: 1.47,
         },
         alpha: 1,
       },
@@ -57,9 +57,13 @@ export default
       id: 'spin-button',
       display: {
         position: {
-          x: 1200,
-          y: 360,
+          x: 1050,
+          y: 250,
         },
+        scale: {
+          x: 0.4,
+          y: 0.4,
+        }
       },
       attributes: {
         touchEvent: 'spin',

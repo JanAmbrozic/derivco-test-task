@@ -3,8 +3,8 @@ export default
   id: 'balance',
   display: {
     position: {
-      x: 50,
-      y: 50,
+      x: 350,
+      y: 520,
     },
     scale: {
       x: 0.5,
@@ -44,6 +44,27 @@ export default
     }
   },
   entities: [
+    {
+      id: 'paytableBackground',
+      display: {
+        position: {
+          x: 10,
+          y: -110,
+        },
+        scale: {
+          x: 0.85,
+          y: 0.60,
+        },
+        alpha: 1,
+      },
+      attributes: {
+        textureId: 'paytableBackground',
+      },
+      components: [
+        'Sprite',
+      ],
+    },
+
     {
       id: 'balanceBackground',
       display: {

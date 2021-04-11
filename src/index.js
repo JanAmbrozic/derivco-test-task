@@ -15,7 +15,7 @@ export default class Game {
   constructor() {
     console.log('Hello Derivco!');
 
-    this.app = new PIXI.Application({ width: 1280, height: 720, backgroundColor: 0x3399da });
+    this.app = new PIXI.Application({ width: 1280, height: 720, backgroundColor: 0x000 });
 
     this.app.ticker.add(() => {
       TWEEN.update();
