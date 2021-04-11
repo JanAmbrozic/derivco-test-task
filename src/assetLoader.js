@@ -6,14 +6,15 @@ export default class AssetLoader {
     this.loader = PIXI.loader;
 
     const assets = {
-      spinButton: 'assets/Reel/2xBAR.png',
+      spinButton: 'assets/spin.png',
       '2xBAR': 'assets/Reel/2xBAR.png',
       '3xBAR': 'assets/Reel/3xBAR.png',
       '7': 'assets/Reel/7.png',
       'BAR': 'assets/Reel/BAR.png',
       'CHERRY': 'assets/Reel/Cherry.png',
-      'BLANK': 'assets/Reel/BLANK.png',
-      reelBackground: 'assets/Reel/reelBackground.png'
+      reelBackground: 'assets/Reel/reelBackground.png',
+      balanceBackground: 'assets/balanceBackground.png',
+      background: 'assets/background.jpeg'
     };
 
     // add all assets
