@@ -16,7 +16,6 @@ export default class Reel {
   constructor(reelIndex, numOfSymbols, reelParams) {
     this.container = new PIXI.Container();
     this.symbols = [];
-    this.currentIndex = 0;
     this.numOfSymbols = numOfSymbols;
     this.reelParams = reelParams;
     this.reelHeight = 400;
@@ -25,7 +24,7 @@ export default class Reel {
     this.reelSet = reelParams.reelSet;
     this.reelIndex = reelIndex;
     this.topSymbol;
-    this.reelSetPosition = 0;
+    this.reelSetPosition = Math.floor(Math.random() * this.reelSet.length - 1);
 
     this.resultsContainer = new PIXI.Container();
 
@@ -35,7 +34,7 @@ export default class Reel {
       top: -150,
       center: -75,
       bottom: 0
-    }
+    };
 
     const graphics1 = new PIXI.Graphics();
     graphics1.beginFill(0x22CCFF);
@@ -45,12 +44,12 @@ export default class Reel {
     //for debuggin purposes
     const graphics = new PIXI.Graphics();
     graphics.beginFill(0xFF3300);
-    graphics.drawRect(0, 0, 150, this.reelHeight);
+    graphics.drawRect(0, 0, 150, this.reelHeight/1.5);
     graphics.endFill();
    
     this.container.addChild(graphics);
-    this.resultsContainer.addChild(graphics1);
-    //this.container.mask = graphics;
+    //this.resultsContainer.addChild(graphics1);
+    this.container.mask = graphics;
   }
 
   /**
@@ -134,14 +133,8 @@ export default class Reel {
 
   setStopping(pos, stoppingPosition, results) {
     this.state = REEL_STATES.STOPPING;
-    //set winning symbols + padding
-    // for (const result of this.results) {
-    //   sym.y = this.topSymbol.y - sym.height;
-    //   this.topSymbol = sym;
-    // }
-    this.reelSet.push(...results)
-    this.reelSetPosition = this.reelSet.length - 4;
-    this.symCounter = 5;  
+    this.reset();
+
     this.stopOffset = this.stoppingPos[stoppingPosition];
 
     this.resultsContainer.y = this.topSymbol.y - this.reelHeight;
@@ -184,19 +177,19 @@ export default class Reel {
         for (const symbol of this.symbols) {
 
           if((symbol.y) >= this.reelHeight) {
-            this.topSymbol.tint = 0xFFFFFF;
+            //this.topSymbol.tint = 0xFFFFFF;
 
             symbol.y = this.topSymbol.y - symbol.height;
             this.topSymbol = symbol;
-            symbol.tint = 0x000;
+            //symbol.tint = 0x000;
 
             this.updateTopSymbol(symbol);
           } else {
-            symbol.y += 10;
+            symbol.y += 20;
           }
         }
         if(this.resultsContainer.y < this.reelHeight) {
-          this.resultsContainer.y += 10;
+          this.resultsContainer.y += 20;
         }
 
         break;
@@ -214,7 +207,7 @@ export default class Reel {
             //   this.finishStopping();
             // }
           //} else {
-            symbol.y += 10;
+            symbol.y += 20;
           //}
         }
         break;

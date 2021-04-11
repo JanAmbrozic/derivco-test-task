@@ -40,8 +40,6 @@ export default class Paytable extends Component {
    */
   highlightWins(wins) {
 
-
-
     for (const win of wins) {
       let paylineId = this.entity.attributes.winlineIdMap[win.id];
       let payline = sceneManager.find(paylineId).children[0];
@@ -51,9 +49,9 @@ export default class Paytable extends Component {
       .repeat(6)
       .delay(250)
       .onRepeat(() => {
-        payline.style.fill = payline.style.fill === "white" ? "black" : "white"
+        payline.style.fill = payline.style.fill === "white" ? "black" : "white";
       })
-      .start()
+      .start();
     }
 
 

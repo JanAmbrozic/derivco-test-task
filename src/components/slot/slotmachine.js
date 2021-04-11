@@ -25,7 +25,6 @@ export default class Slotmachine extends Component {
     this.winninLineTweens = new TWEEN.Tween();
     this.resultsEval = new ResultsEval();
     this.rng = new RNG(this.entity);
-
   }
 
   /**
@@ -82,7 +81,15 @@ export default class Slotmachine extends Component {
       .yoyo(true)
       .start();
 
+    new TWEEN.Tween(this.container)
+    .delay(2000)
+    .onComplete(() => {
+      this.stop();
+    })
+    .start();
+
     for (let i = 0; i < this.reels.length - 1; i++) {
+
       this.reels[i].spin(Math.round(Math.random() * 20));
     }
     await this.reels[this.reels.length - 1].spin(Math.round(Math.random() * 20));
@@ -93,34 +100,34 @@ export default class Slotmachine extends Component {
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
 
-    new TWEEN.Tween(this.container)
-    .delay(200)
-    .onComplete(() => {
-      this.stop();
-    })
-    .start()
+
   }
 
   async stop() {
 
     let winningPositions = {
     
-    }
+    };
 
     for (let i = 0; i < this.reels.length ; i++) {
       // pass in reelSet stop position
       let results = this.rng.getResults(i);
 
-      this.reels[i].stop(0, results.winlineType, results.symbols);
-      winningPositions[i] = {
-        winningLine: results.winlineType,
-        symbol: results[1]
-      }
+      new TWEEN.Tween({})
+      .to({}, 0)
+      .delay(500 * i)
+      .easing(TWEEN.Easing.Linear.None)
+      .onComplete(async () => {
+        await this.reels[i].stop(0, results.winlineType, results.symbols);
+        winningPositions[i] = {
+          winningLine: results.winlineType,
+          symbol: results[1]
+        };
+      })
+      .start();
     }
     this.state = 'idle';
   
-    console.log(winningPositions)
-
     this.checkForWinningLines(this.reels, this.entity.attributes.winlines);
   }
 
