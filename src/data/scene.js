@@ -10,17 +10,38 @@ export default
     maxHeight: 720,
   },
   entities: [
+    {
+      id: 'background',
+      display: {
+        position: {
+          x: 0,
+          y: 0,
+        },
+        scale: {
+          x: 0,
+          y: 0,
+        },
+        alpha: 1,
+      },
+      attributes: {
+        textureId: 'background',
+      },
+      components: [
+        'Sprite',
+      ],
+    },
+
     paytable.default,
     {
       id: 'reel-background',
       display: {
         position: {
           x: 425,
-          y: 155,
+          y: 145,
         },
         scale: {
           x: 0.8,
-          y: 1,
+          y: 1.05,
         },
         alpha: 1,
       },
@@ -42,7 +63,7 @@ export default
       },
       attributes: {
         touchEvent: 'spin',
-        textureId: 'spinButton',
+        textureId: 'spinButton'
       },
       entities: [
       ],

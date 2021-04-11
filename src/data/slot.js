@@ -29,9 +29,9 @@ export default
       5, 5, 5
     ],
     reelSet: [
-      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"],
-      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"],
-      ["3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR", "2xBAR", "3xBAR"]
+      ["3xBAR", "BAR", "2xBAR", "7", "CHERRY"],
+      ["3xBAR", "BAR", "2xBAR", "7", "CHERRY"],
+      ["3xBAR", "BAR", "2xBAR", "7", "CHERRY"]
     ],
 
     spin: {
@@ -80,34 +80,34 @@ export default
       }, 
       // Any combination of CHERRY and 7 on any line 75
       {
-        winlineId: 0,
+        winlineId: 15,
         type: "top",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, {
-        winlineId: 0,
+        winlineId: 16,
         type: "center",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, {
-        winlineId: 0,
+        winlineId: 17,
         type: "bottom",
         sym: ["7", "CHERRY"],
         winAmount: 75,
       }, 
       // Combination of any BAR symbols on any line 5
       {
-        winlineId: 0,
+        winlineId: 18,
         type: "top",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
       }, {
-        winlineId: 1,
+        winlineId: 19,
         type: "center",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
       }, {
-        winlineId: 2,
+        winlineId: 20,
         type: "bottom",
         sym: ["BAR", "2xBAR", "3xBAR"],
         winAmount: 5,
