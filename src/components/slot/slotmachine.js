@@ -24,7 +24,7 @@ export default class Slotmachine extends Component {
     this.state = 'idle';
     this.winninLineTweens = new TWEEN.Tween();
     this.resultsEval = new ResultsEval();
-    this.rng = new RNG();
+    this.rng = new RNG(this.entity);
 
   }
 
@@ -109,7 +109,7 @@ export default class Slotmachine extends Component {
 
     for (let i = 0; i < this.reels.length ; i++) {
       // pass in reelSet stop position
-      let results = this.rng.getResults();
+      let results = this.rng.getResults(i);
 
       this.reels[i].stop(0, results.winlineType, results.symbols);
       winningPositions[i] = {
