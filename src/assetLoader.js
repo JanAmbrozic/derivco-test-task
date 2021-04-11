@@ -14,6 +14,7 @@ export default class AssetLoader {
       'CHERRY': 'assets/Reel/Cherry.png',
       reelBackground: 'assets/Reel/reelBackground.png',
       balanceBackground: 'assets/balanceBackground.png',
+      paytableBackground: 'assets/paytableBackground.png',
       background: 'assets/background.jpeg'
     };
 

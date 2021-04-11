@@ -14,7 +14,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
-   sodipodi:docname="reel-background.svg">
+   sodipodi:docname="reel-background.svg"
+   inkscape:export-filename="/Users/janambrozic/Development/general/derivco-test-task/resources/Reel/reel-background.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <linearGradient
@@ -37,15 +40,15 @@
      inkscape:cx="398.77342"
      inkscape:cy="250.02165"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      showguides="true"
      inkscape:window-width="1835"
      inkscape:window-height="1027"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1" />
+     inkscape:window-x="104"
+     inkscape:window-y="335"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -69,7 +72,9 @@
        height="0.26726952"
        x="42.094948"
        y="60.135643"
-       ry="0.13363476" />
+       ry="0.13363476"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <rect
        style="fill:#a4a598;fill-opacity:1;stroke:#ffbd00;stroke-width:2.64583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect955-1"
@@ -77,7 +82,9 @@
        height="0.26726952"
        x="41.961319"
        y="75.920662"
-       ry="0.13363476" />
+       ry="0.13363476"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <rect
        style="fill:#a4a598;fill-opacity:1;stroke:#ffbd00;stroke-width:2.64583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect955-1-1-0"
@@ -85,7 +92,9 @@
        height="0.26726952"
        x="42.495857"
        y="92.742523"
-       ry="0.13363476" />
+       ry="0.13363476"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
   </g>
   <g
      inkscape:label="Layer 1"
@@ -97,8 +106,11 @@
        width="45"
        height="60.472637"
        x="30"
-       y="46.048672"
-       ry="12.126023" />
+       y="46.072914"
+       ry="12.126023"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       rx="2" />
     <rect
        style="fill:#a4a598;fill-opacity:1;fill-rule:evenodd;stroke:#ffbd00;stroke-width:2.64583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect14-0"
@@ -106,14 +118,20 @@
        height="60.472637"
        x="80.999916"
        y="46.072517"
-       ry="12.126023" />
+       ry="12.126023"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       rx="2" />
     <rect
        style="fill:#a4a598;fill-opacity:1;fill-rule:evenodd;stroke:#ffbd00;stroke-width:2.64583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect14-0-5"
-       width="45.568756"
-       height="60.472637"
+       width="45.569"
+       height="60.573002"
        x="132.11592"
-       y="46.435177"
-       ry="12.126023" />
+       y="46.072914"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       ry="12.126023"
+       rx="2" />
   </g>
 </svg>
