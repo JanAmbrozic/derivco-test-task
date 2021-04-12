@@ -49,7 +49,7 @@ export default class Game {
     // play ambient sounds
     const soundId = AssetLoader.sounds[AssetLoader.audioAssets.background].play();
     AssetLoader.sounds[AssetLoader.audioAssets.background].volume(0.7, soundId);
-    AssetLoader.sounds[AssetLoader.audioAssets.background].loop(soundId);
+    AssetLoader.sounds[AssetLoader.audioAssets.background].loop(soundId, soundId);
 
     this.checkForDebug(this.sceneManager);
   }
