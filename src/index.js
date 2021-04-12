@@ -13,6 +13,7 @@ import Debug from './debug';
 
 export default class Game {
   constructor() {
+    // eslint-disable-next-line no-console
     console.log('Hello Derivco!');
 
     this.app = new PIXI.Application({ width: 1280, height: 720, backgroundColor: 0x000 });
@@ -40,11 +41,16 @@ export default class Game {
       Reel,
       Paytable
     };
+    // start the scene manager and register the ticker
     this.sceneManager.init(this.app, components);
     this.sceneManager.start();
     this.app.ticker.add(() => this.sceneManager.update());
-    //const soundId = AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].play();
-    //AssetLoader.sounds[AssetLoader.audioAssets.battleThemeA].volume(0.7, soundId);
+
+    // play ambient sounds
+    const soundId = AssetLoader.sounds[AssetLoader.audioAssets.background].play();
+    AssetLoader.sounds[AssetLoader.audioAssets.background].volume(0.7, soundId);
+    AssetLoader.sounds[AssetLoader.audioAssets.background].loop(soundId);
+
     this.checkForDebug(this.sceneManager);
   }
 

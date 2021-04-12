@@ -7,7 +7,9 @@
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
-        "PIXI": "readonly"
+        "PIXI": "readonly",
+        "sceneManager": "writable",
+        "global": "writable"
     },
     "parserOptions": {
         "ecmaVersion": 2018,
