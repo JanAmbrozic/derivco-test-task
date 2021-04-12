@@ -3,9 +3,8 @@
  */
 export default class ResultsEval {
 
-
 /**
- * Checks for winlines. This code could be improved but since this would be sent back from a 
+ * Checks for winlines. This code could be improved a lot but since this would be sent back from a 
  * server in a realistic game it's just a rough mock.
  */
   checkWinningLines(reels, winlineData) {
@@ -78,6 +77,12 @@ export default class ResultsEval {
       }
     }
 
+    //check if all symbols are the same, then we have a higher winning combination
+    if (reels[0].getVisibleSymbols()[index] === reels[1].getVisibleSymbols()[index] &&
+      reels[0].getVisibleSymbols()[index] === reels[2].getVisibleSymbols()[index]) {
+      return null;
+    }
+
     if (match && winline.sym.length === 2 && winline.sym[0] === "7" && winline.sym[1] === "CHERRY") {
       let foundWinline = {
         id: winline.winlineId,
@@ -101,12 +106,12 @@ export default class ResultsEval {
         match = false;
       }
     }
+
     //check if all bars are the same, then we have a higher winning combination
     if (reels[0].getVisibleSymbols()[index] === reels[1].getVisibleSymbols()[index] &&
       reels[0].getVisibleSymbols()[index] === reels[2].getVisibleSymbols()[index]) {
       return null;
     }
-
 
     if (match && winline.sym.length === 3) {
       let foundWinline = {
