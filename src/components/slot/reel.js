@@ -256,6 +256,7 @@ export default class Reel {
    * Is called when reels are stopped with a symbol index where the reel has stopped.
    * @param {number} onIndex - Index of the symbol where the reel stops.
    */
+  // eslint-disable-next-line no-unused-vars
   reelStopped(onIndex) {
     //TODO: implementation here
     //console.log("Reel Stopped");
