@@ -16,27 +16,12 @@ export default class Paytable extends Component {
    */
   start(entity) {
     this.entity = entity;
-    entity.eventEmitter.on('spinStarted', () => { this.reset(); });
     entity.eventEmitter.on('win', (win) => { this.highlightWins(win.winlines); });
-    this.entity.attributes
   }
+
 
   /**
-   * Is called from the SceneManager when entities are ready which means we can now retrieve them.
-   */
-  entitiesReady() {
-    const childIndex = 0;
-    this.balanceValueEntity = sceneManager.find('balance-value').children[childIndex];
-    this.winValueEntity = sceneManager.find('win-value').children[childIndex];
-    this.totalBetValueEntity = sceneManager.find('total-bet-value').children[childIndex];
-  }
-
-  reset() {
-
-  }
-
-  /**
-   * Updates the totalWin. Usually happens on a winning line event and it's reset to 0 on start of every spin.
+   * Highlights the winning combination in the paytable
    */
   highlightWins(wins) {
 
@@ -45,16 +30,13 @@ export default class Paytable extends Component {
       let payline = sceneManager.find(paylineId).children[0];
 
       new TWEEN.Tween(payline)
-      .to({ fake: 360 }, 100)
-      .repeat(6)
-      .delay(250)
-      .onRepeat(() => {
-        payline.style.fill = payline.style.fill === "white" ? "black" : "white";
-      })
-      .start();
+        .to({ fake: 360 }, 100)
+        .repeat(6)
+        .delay(250)
+        .onRepeat(() => {
+          payline.style.fill = payline.style.fill === "red" ? "black" : "red";
+        })
+        .start();
     }
-
-
-    //console.log("PAYTABLe", win)
   }
 }
