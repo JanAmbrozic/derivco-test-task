@@ -74,6 +74,7 @@ export default class Slotmachine extends Component {
       .delay(1500)
       .onComplete(() => {
         this.stop();
+        AssetLoader.sounds[AssetLoader.audioAssets.spinning].stop(spinSound);
       })
       .start();
 
@@ -84,7 +85,6 @@ export default class Slotmachine extends Component {
     await this.reels[this.reels.length - 1].spin(Math.round(Math.random() * 20));
 
     this.container.filters = [];
-    AssetLoader.sounds[AssetLoader.audioAssets.spinning].stop(spinSound);
   }
 
   /**
