@@ -47,6 +47,7 @@ export default class Slotmachine extends Component {
   async startSpin() {
     const spinSound = AssetLoader.sounds[AssetLoader.audioAssets.spinning].play();
     AssetLoader.sounds[AssetLoader.audioAssets.spinning].loop(spinSound, spinSound);
+    this.enableSpinButton(false);
 
     this.state = 'spinning';
     // reset the total win
@@ -114,6 +115,7 @@ export default class Slotmachine extends Component {
 
     Promise.all(promises).then(() => {
       this.checkForWinningLines(this.reels, this.entity.attributes.winlines);
+      this.enableSpinButton(true);
     });
 
   }
@@ -171,6 +173,23 @@ export default class Slotmachine extends Component {
   update() {
     for (let i = 0; i < this.reels.length; i++) {
       this.reels[i].update();
+    }
+  }
+
+  /**
+   * Enables/disables the button.
+   * @param {boolean} enabled
+   */
+  enableSpinButton(enable) {
+    let spinButton = sceneManager.find('spin-button').children[0];
+    if (enable) {
+      spinButton.interactive = true;
+      spinButton.buttonMode = true;
+      spinButton.alpha = 1;
+    } else {
+      spinButton.interactive = false;
+      spinButton.buttonMode = false;
+      spinButton.alpha = 0.7;
     }
   }
 
