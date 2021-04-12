@@ -30,12 +30,15 @@ export default class Debug {
                     }
                 };
                 eventEmitter.emit('setResults', debugResults);
+            },
+            "SET BALANCE": function(){
                 eventEmitter.emit('setBalance', submit.balance);
             },
             balance: 5000
         };
-        gui.add(submit, "balance");
         gui.add(submit, 'RIG');
+        gui.add(submit, "balance");
+        gui.add(submit, 'SET BALANCE');
     }
 
     /**
@@ -48,15 +51,15 @@ export default class Debug {
         var reel = datGui.addFolder(reelName);
 
         var folderData ={
-            Winline: 'top',
-            TopSymbol: 'random',
-            CenterSymbol: 'random',
-            BottomSymbol: 'random'
+            Winline: 'center',
+            TopSymbol: 'CHERRY',
+            CenterSymbol: 'CHERRY',
+            BottomSymbol: 'CHERRY'
         };
         reel.add(folderData, 'Winline', { Top: 'top', Center: 'center', Bottom: 'bottom' });
-        reel.add(folderData, 'TopSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', RANDOM: 'random'  });
-        reel.add(folderData, 'CenterSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', RANDOM: 'random' });
-        reel.add(folderData, 'BottomSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', RANDOM: 'random' });
+        reel.add(folderData, 'TopSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', "2xBAR": '2xBAR', "3xBAR": '3xBAR', RANDOM: 'random'  });
+        reel.add(folderData, 'CenterSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', "2xBAR": '2xBAR', "3xBAR": '3xBAR', RANDOM: 'random' });
+        reel.add(folderData, 'BottomSymbol', { 7: '7', CHERRY: 'CHERRY', BAR: 'BAR', "2xBAR": '2xBAR', "3xBAR": '3xBAR', RANDOM: 'random' });
 
         return folderData;
     }
