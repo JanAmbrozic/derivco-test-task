@@ -1,6 +1,6 @@
 {
   "name": "derivco-test-task",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Derivco test task",
   "main": "src/index.js",
   "private": true,
