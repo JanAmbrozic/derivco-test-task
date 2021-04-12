@@ -4,7 +4,7 @@ import Component from '../../sceneManager/component';
 import Reel from './reel';
 import ResultsEval from './resultsEval';
 import RNG from '../mockServer/rng';
-
+import AssetLoader from '../../assetLoader';
 
 /**
  * Slotmachine component. It handles everything from reel creation to spinning and stopping.
@@ -58,9 +58,8 @@ export default class Slotmachine extends Component {
    * which gives the illusion of the reel moving much faster.
    */
   async startSpin() {
-    //const spinSound = AssetLoader.sounds[AssetLoader.audioAssets.swoosh].play();
-    //AssetLoader.sounds[AssetLoader.audioAssets.swoosh].loop(spinSound, spinSound);
-
+    const spinSound = AssetLoader.sounds[AssetLoader.audioAssets.spinning].play();
+    AssetLoader.sounds[AssetLoader.audioAssets.spinning].loop(spinSound, spinSound);
 
 
     this.state = 'spinning';
@@ -96,7 +95,7 @@ export default class Slotmachine extends Component {
     await this.reels[this.reels.length - 1].spin(Math.round(Math.random() * 20));
 
     this.container.filters = [];
-    //AssetLoader.sounds[AssetLoader.audioAssets.swoosh].stop(spinSound);
+    AssetLoader.sounds[AssetLoader.audioAssets.spinning].stop(spinSound);
     //await this.zoomIn();
     //AssetLoader.sounds[AssetLoader.audioAssets.creek].play();
     //this.state = 'zoomedIn';
@@ -126,6 +125,8 @@ export default class Slotmachine extends Component {
             winningLine: results.winlineType,
             symbol: results[1]
           };
+          AssetLoader.sounds[AssetLoader.audioAssets.reelStop].play();
+
           resolve();
         })
         .start();

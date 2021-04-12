@@ -51,6 +51,8 @@ export default class AssetLoader {
 }
 
 AssetLoader.audioAssets = {
-
+  background: 'assets/audio/background.mp3',
+  spinning: 'assets/audio/spinning.mp3',
+  reelStop: 'assets/audio/reelStop.mp3'
 };
 AssetLoader.sounds = {};
